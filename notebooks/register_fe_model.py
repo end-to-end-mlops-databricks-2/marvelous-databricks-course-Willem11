@@ -1,8 +1,17 @@
 import mlflow
 from pyspark.sql import SparkSession
+
 from src.reservations.config import databricks_config
-from src.reservations.models.feature_lookup_model import (create_feature_table, load_data, feature_engineering, train_model, log_model, register_model,
-                                                    load_latest_model_and_predict, calculate_lead_time_cat)
+from src.reservations.models.feature_lookup_model import (
+    calculate_lead_time_cat,
+    create_feature_table,
+    feature_engineering,
+    load_data,
+    load_latest_model_and_predict,
+    log_model,
+    register_model,
+    train_model,
+)
 
 # Set the tracking and registry URIs
 mlflow.set_tracking_uri("databricks")

@@ -1,8 +1,15 @@
 import mlflow
 from pyspark.sql import SparkSession
 from sklearn.model_selection import train_test_split
+
 from src.reservations.config import databricks_config
-from src.reservations.models.basic_model import load_data, train_model, log_model, register_model, load_latest_model_and_predict
+from src.reservations.models.basic_model import (
+    load_data,
+    load_latest_model_and_predict,
+    log_model,
+    register_model,
+    train_model,
+)
 
 # Set the tracking and registry URIs
 mlflow.set_tracking_uri("databricks")

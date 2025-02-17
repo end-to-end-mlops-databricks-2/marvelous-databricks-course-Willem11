@@ -1,12 +1,14 @@
 import mlflow
+import mlflow.sklearn
+from mlflow.models import infer_signature
+from mlflow.tracking import MlflowClient
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import when
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
-from mlflow.models import infer_signature
-import mlflow.sklearn
-from mlflow.tracking import MlflowClient
+
 from src.reservations.config import databricks_config
+
 
 def create_feature_table():
     """Create or replace the feature table and make splits in train and test sets"""

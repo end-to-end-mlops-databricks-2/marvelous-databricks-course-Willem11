@@ -1,4 +1,6 @@
 import pandas as pd
+
+
 def transform_string_columns(df, drop_cols, x_cols, y_col):
     """Function to transform the string columns to integer columns so that they can be used by an ML model"""
     for col in drop_cols:

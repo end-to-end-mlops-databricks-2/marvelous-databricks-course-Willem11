@@ -1,7 +1,8 @@
 import pandas as pd
 from pyspark.sql import SparkSession
-from src.reservations.preprocessor import transform_string_columns
+
 from src.reservations.config import databricks_config
+from src.reservations.preprocessor import transform_string_columns
 
 # Initialize Spark session
 spark = SparkSession.builder.appName("HotelReservations").getOrCreate()

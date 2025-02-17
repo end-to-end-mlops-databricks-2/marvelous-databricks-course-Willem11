@@ -1,11 +1,8 @@
 import mlflow
-import pandas as pd
 from mlflow.models import infer_signature
-from pyspark.sql import SparkSession
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-from src.reservations.config import databricks_config
 
 def load_data(config, spark):
     """Load data from table."""
