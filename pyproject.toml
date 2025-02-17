@@ -46,4 +46,3 @@ ignore = [
 
 [tool.ruff.format]
 indent-style = "space"
-

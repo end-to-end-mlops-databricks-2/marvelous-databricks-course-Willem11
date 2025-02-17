@@ -12,10 +12,17 @@ file_path = "../data/Hotel Reservations.csv"
 df = pd.read_csv(file_path)
 
 # Clean dataset
-df = transform_string_columns(df, drop_cols=['Booking_ID'], x_cols=['type_of_meal_plan', 'room_type_reserved', 'market_segment_type'], y_col=['booking_status'])
+df = transform_string_columns(
+    df,
+    drop_cols=["Booking_ID"],
+    x_cols=["type_of_meal_plan", "room_type_reserved", "market_segment_type"],
+    y_col=["booking_status"],
+)
 
 # Convert to Spark DataFrame
 spark_df = spark.createDataFrame(df)
 
 # Write to Databricks Delta Table
-spark_df.write.format("delta").saveAsTable(f"{databricks_config['catalog']}.{databricks_config['schema']}.{databricks_config['table_name']}")
+spark_df.write.format("delta").saveAsTable(
+    f"{databricks_config['catalog']}.{databricks_config['schema']}.{databricks_config['table_name']}"
+)

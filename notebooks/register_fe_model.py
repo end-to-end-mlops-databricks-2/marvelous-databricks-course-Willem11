@@ -18,7 +18,7 @@ mlflow.set_tracking_uri("databricks")
 mlflow.set_registry_uri("databricks")
 
 # Set the active experiment
-mlflow.set_experiment(databricks_config['experiment_name_fe'])
+mlflow.set_experiment(databricks_config["experiment_name_fe"])
 
 # Create a Spark session
 spark = SparkSession.builder.getOrCreate()
@@ -40,10 +40,12 @@ with mlflow.start_run(run_name="fe_reservations_run") as run:
     register_model(run_id)
 
 # Example of making predictions with the latest model
-all_data = spark.table(f"{databricks_config['catalog']}.{databricks_config['schema']}.{databricks_config['table_name']}")
+all_data = spark.table(
+    f"{databricks_config['catalog']}.{databricks_config['schema']}.{databricks_config['table_name']}"
+)
 all_data = all_data.withColumn("lead_time_cat", calculate_lead_time_cat(all_data["lead_time"])).toPandas()
 
-X = all_data[databricks_config['num_features'] + databricks_config['num_features_fe']]
+X = all_data[databricks_config["num_features"] + databricks_config["num_features_fe"]]
 y = load_latest_model_and_predict(X)
 
 print("MLflow experiment and model registration completed!")
