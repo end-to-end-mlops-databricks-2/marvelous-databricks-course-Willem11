@@ -1,9 +1,12 @@
 import os
+
 import mlflow
 import requests
 from databricks.sdk import WorkspaceClient
-from src.reservations.config import databricks_config
 from databricks.sdk.service.serving import EndpointCoreConfigInput, ServedEntityInput
+
+from src.reservations.config import databricks_config
+
 
 def get_latest_model_version(model_name):
     client = mlflow.MlflowClient()
@@ -11,7 +14,10 @@ def get_latest_model_version(model_name):
     print(f"Latest model version: {latest_version}")
     return latest_version
 
-def deploy_or_update_serving_endpoint(model_name, endpoint_name, version="latest", workload_size="Small", scale_to_zero=True):
+
+def deploy_or_update_serving_endpoint(
+    model_name, endpoint_name, version="latest", workload_size="Small", scale_to_zero=True
+):
     workspace = WorkspaceClient()
     endpoint_exists = any(item.name == endpoint_name for item in workspace.serving_endpoints.list())
 
@@ -37,6 +43,7 @@ def deploy_or_update_serving_endpoint(model_name, endpoint_name, version="latest
     else:
         workspace.serving_endpoints.update_config(name=endpoint_name, served_entities=served_entities)
 
+
 def call_endpoint(endpoint_name, record):
     os.environ["DBR_HOST"] = databricks_config["host"]
     os.environ["DBR_TOKEN"] = databricks_config["token"]
@@ -45,6 +52,6 @@ def call_endpoint(endpoint_name, record):
         serving_endpoint,
         headers={"Authorization": f"Bearer {os.environ['DBR_TOKEN']}"},
         json={"dataframe_records": record},
-        verify=False
+        verify=False,
     )
     return response.status_code, response.text

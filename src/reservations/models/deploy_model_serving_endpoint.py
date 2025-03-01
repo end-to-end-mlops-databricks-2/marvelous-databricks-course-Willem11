@@ -1,18 +1,20 @@
 import os
 import time
-import requests
+
 from pyspark.dbutils import DBUtils
 from pyspark.sql import SparkSession
-from src.reservations.config import databricks_config
-from src.reservations.serving.model_serving import deploy_or_update_serving_endpoint, call_endpoint
 from sklearn.model_selection import train_test_split
+
+from src.reservations.config import databricks_config
 from src.reservations.models.basic_model import load_data
+from src.reservations.serving.model_serving import call_endpoint, deploy_or_update_serving_endpoint
 
 # Initialize Spark session and DBUtils
 spark = SparkSession.builder.getOrCreate()
 dbutils = DBUtils(spark)
 
 # Set environment variables
+os.environ["DBR_TOKEN"] = databricks_config["token"]
 os.environ["DBR_HOST"] = databricks_config["host"]
 
 # Load project config
@@ -41,7 +43,7 @@ print(f"Response Status: {status_code}")
 print(f"Response Text: {response_text}")
 print(len(dataframe_records))
 
-#Load test
+# Load test
 for record in dataframe_records[:10]:
     call_endpoint(endpoint_name, record)
     time.sleep(0.5)
