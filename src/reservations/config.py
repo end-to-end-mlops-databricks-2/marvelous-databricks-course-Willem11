@@ -1,6 +1,7 @@
 databricks_config = {
     "catalog": "hive_metastore",
     "schema": "default",
+    "host": "https://adb-320373841791891.11.azuredatabricks.net/",
     "table_name": "processed_reservations",
     "experiment_name_basic": "/Shared/basic_reservations_experiment_willem",
     "experiment_name_fe": "/Shared/fe_reservations_experiment_willem",
